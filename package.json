@@ -1,0 +1,22 @@
+{
+  "name": "seedbiomed-slides",
+  "version": "1.0.0",
+  "description": "SEEDBiomed HTML presentation template with PowerPoint export",
+  "author": "Roland V. Bumbuc (on behalf of SEEDBiomed)",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "test": "node --test scripts/test.js",
+    "export": "node scripts/export-pptx.js \"SEEDBiomed Template.html\" seedbiomed.pptx",
+    "export:teal": "node scripts/export-pptx.js \"SEEDBiomed Template.html\" seedbiomed-teal.pptx teal",
+    "export:white": "node scripts/export-pptx.js \"SEEDBiomed Template.html\" seedbiomed-white.pptx white",
+    "export:black": "node scripts/export-pptx.js \"SEEDBiomed Template.html\" seedbiomed-black.pptx black"
+  },
+  "dependencies": {
+    "pptxgenjs": "^3.12.0",
+    "puppeteer": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

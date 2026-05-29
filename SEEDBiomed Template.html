@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<!--
+  SEEDBiomed Scientific Presentation Template
+  Author:    Roland V. Bumbuc, on behalf of SEEDBiomed
+  Copyright: (c) SEEDBiomed. All rights reserved.
+  Licence:   Proprietary. Redistribution, resale, or rebranding without
+             written permission from SEEDBiomed is prohibited.
+             The SEEDBiomed name, logo, and visual identity remain the
+             exclusive property of SEEDBiomed regardless of any
+             modifications made to this file.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="author" content="Roland V. Bumbuc" />
+<meta name="copyright" content="(c) SEEDBiomed. All rights reserved." />
+<meta name="generator" content="" />
+<title>SEEDBiomed - Scientific Presentation Template</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
+<style>
+  :root {
+    --bg: #1A5C57;
+    --bg-deep: #0F3A36;
+    --surface: #236B65;
+    --amber: #E8A020;
+    --silver: #A8A8A0;
+    --cyan: #00B8B8;
+    --text: #F5F5F0;
+    --text-secondary: #D0CEC8;
+    --text-muted: #8FA6A2;
+    --glass-bg: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.12);
+    --hairline: rgba(245,245,240,0.16);
+
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    --pad: 110px;
+
+    --ph-border: rgba(245,245,240,0.28);
+    --ph-fill: rgba(0,0,0,0.10);
+    --ph-stripe: rgba(255,255,255,0.018);
+    --fb-scrim: rgba(7,33,31,0.74);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  deck-stage:not(:defined) { visibility: hidden; }
+
+  html, body { background: #07211f; }
+
+  /* ---------- slide base ---------- */
+  .slide {
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    padding: var(--pad);
+    overflow: hidden;
+    position: relative;
+    --dot: rgba(245,245,240,0.045);
+    background-image: radial-gradient(var(--dot) 1.4px, transparent 1.4px);
+    background-size: 46px 46px;
+    background-position: -8px -8px;
+  }
+  .slide.deep { background-color: var(--bg-deep); --dot: rgba(245,245,240,0.05); }
+
+  /* ---------- shared atoms ---------- */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 21px;
+    font-weight: 500;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 42px;
+    height: 2px;
+    background: var(--amber);
+    display: inline-block;
+  }
+
+  h1.display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    font-size: 96px;
+  }
+  h2.display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.005em;
+    font-size: 72px;
+  }
+  .display em { font-style: italic; color: var(--amber); }
+  .accent-cyan { color: var(--cyan); }
+
+  .lead {
+    font-size: 27px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    font-weight: 400;
+    max-width: 26ch;
+  }
+  .body-copy {
+    font-size: 24px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .hairline { height: 1px; background: var(--hairline); width: 100%; border: 0; }
+
+  /* ---------- slide brief (the template guiding question) ---------- */
+  .brief {
+    border: 1px solid var(--glass-border);
+    border-left: 3px solid var(--amber);
+    background: var(--glass-bg);
+    border-radius: 4px;
+    padding: 13px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    backdrop-filter: blur(2px);
+  }
+  .brief .qmark {
+    flex: 0 0 auto;
+    width: 27px; height: 27px;
+    border-radius: 50%;
+    border: 1.5px solid var(--amber);
+    color: var(--amber);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .brief .brief-label {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 4px;
+  }
+  .brief .brief-text {
+    font-size: 18px;
+    line-height: 1.42;
+    color: var(--text-secondary);
+  }
+  .brief .brief-text b { color: var(--text); font-weight: 600; }
+
+  /* ---------- image placeholder with crosshair corners ---------- */
+  .ph {
+    position: relative;
+    border: 1px dashed var(--ph-border);
+    background:
+      repeating-linear-gradient(135deg, var(--ph-stripe) 0 14px, transparent 14px 28px),
+      var(--ph-fill);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: var(--text-muted);
+    overflow: hidden;
+  }
+  .ph .ph-icon {
+    width: 46px; height: 46px;
+    opacity: 0.55;
+  }
+  .ph .ph-label {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .ph .ph-sub { font-size: 18px; color: var(--text-muted); opacity: 0.8; margin-top: -8px; }
+  .ph .corner { position: absolute; width: 16px; height: 16px; border-color: var(--amber); }
+  .ph .corner.tl { top: 12px; left: 12px; border-top: 2px solid; border-left: 2px solid; }
+  .ph .corner.tr { top: 12px; right: 12px; border-top: 2px solid; border-right: 2px solid; }
+  .ph .corner.bl { bottom: 12px; left: 12px; border-bottom: 2px solid; border-left: 2px solid; }
+  .ph .corner.br { bottom: 12px; right: 12px; border-bottom: 2px solid; border-right: 2px solid; }
+  .ph .ph-fig {
+    position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.22em;
+    color: var(--text-muted); text-transform: uppercase;
+  }
+
+  /* ---------- footer ---------- */
+  .footer {
+    position: absolute;
+    left: var(--pad); right: var(--pad);
+    bottom: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .footer .brand { display: flex; align-items: center; gap: 11px; text-transform: uppercase; letter-spacing: 0.18em; }
+  .footer .brand img { width: 22px; height: 26px; object-fit: contain; }
+  .footer .pg { color: var(--text-secondary); }
+  .footer .pg b { color: var(--amber); font-weight: 600; }
+
+  /* ---------- blank mode: strip all branding / logos deck-wide ---------- */
+  /* add class="no-branding" to <body> to hide every logo, watermark & wordmark */
+  body.no-branding .footer .brand,
+  body.no-branding .seed-wm,
+  body.no-branding .fb-brand,
+  body.no-branding .fb-scrim { display: none !important; }
+  body.no-branding .footer .pg { margin-left: auto; }
+
+  /* ---------- layout helpers ---------- */
+  .stack { display: flex; flex-direction: column; }
+  .grow { flex: 1 1 auto; min-height: 0; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; height: 100%; }
+  .head-block { display: flex; flex-direction: column; gap: 26px; }
+
+  /* number chips / cards */
+  .num {
+    font-family: var(--font-mono);
+    color: var(--amber);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+  .card {
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    border-radius: 6px;
+    padding: 34px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .card h3 { font-family: var(--font-display); font-weight: 400; font-size: 30px; line-height: 1.1; }
+  .card p { font-size: 20px; line-height: 1.55; color: var(--text-secondary); }
+  .card .num { margin-bottom: 4px; }
+
+  .stat-big {
+    font-family: var(--font-display);
+    font-size: 80px;
+    line-height: 1;
+    color: var(--amber);
+  }
+  .stat-big.cyan { color: var(--cyan); }
+  .stat-label { font-size: 18px; color: var(--text-secondary); line-height: 1.4; margin-top: 12px; }
+
+  /* contents list */
+  .toc { display: flex; flex-direction: column; }
+  .toc-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    align-items: baseline;
+    gap: 24px;
+    padding: 21px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .toc-row .toc-n { font-family: var(--font-mono); color: var(--amber); font-size: 18px; }
+  .toc-row .toc-t { font-family: var(--font-display); font-size: 33px; }
+  .toc-row .toc-d { font-size: 18px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 0.08em; }
+
+  /* big watermark seed */
+  .seed-wm {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-secondary);
+    border: 1px solid var(--glass-border); border-radius: 100px;
+    padding: 8px 16px;
+  }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); }
+
+  /* ---------- full-bleed image slide (image only — logo + name) ---------- */
+  .slide.fullbleed { padding: 0; background-image: none; }
+  .fb-image {
+    position: absolute; inset: 0;
+    border: 0; border-radius: 0;
+    background:
+      repeating-linear-gradient(135deg, var(--ph-stripe) 0 18px, transparent 18px 36px),
+      var(--ph-fill);
+  }
+  .fb-scrim {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 300px;
+    background: linear-gradient(to top, var(--fb-scrim), transparent);
+    pointer-events: none; z-index: 1;
+  }
+  .fb-brand {
+    position: absolute; left: 76px; bottom: 62px; z-index: 2;
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--font-mono);
+    text-transform: uppercase; letter-spacing: 0.22em;
+    font-size: 23px; color: var(--text);
+  }
+  .fb-brand img { width: 34px; height: 40px; object-fit: contain; }
+
+  /* ---------- theme variants — same palette, no grey ---------- */
+  .slide.theme-white {
+    --bg: #FFFFFF;
+    --bg-deep: #EAF4F1;
+    --text: #0E2E2B;
+    --text-secondary: #2F5F58;
+    --text-muted: #4E817A;
+    --amber: #B5720A;
+    --cyan: #00807F;
+    --hairline: rgba(14,46,43,0.18);
+    --glass-bg: rgba(14,46,43,0.045);
+    --glass-border: rgba(14,46,43,0.16);
+    --dot: rgba(14,46,43,0.05);
+    --ph-border: rgba(14,46,43,0.30);
+    --ph-fill: rgba(14,46,43,0.05);
+    --ph-stripe: rgba(14,46,43,0.045);
+    --fb-scrim: rgba(255,255,255,0.86);
+  }
+  .slide.theme-white.deep { --dot: rgba(14,46,43,0.05); }
+
+  .slide.theme-black {
+    --bg: #000000;
+    --bg-deep: #000000;
+    --text: #F5F5F0;
+    --text-secondary: #C9DCD7;
+    --text-muted: #6FA69D;
+    --amber: #EBA526;
+    --cyan: #1ECBCB;
+    --hairline: rgba(245,245,240,0.16);
+    --glass-bg: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.12);
+    --dot: rgba(245,245,240,0.05);
+    --ph-border: rgba(245,245,240,0.26);
+    --ph-fill: rgba(255,255,255,0.04);
+    --ph-stripe: rgba(255,255,255,0.02);
+    --fb-scrim: rgba(0,0,0,0.82);
+  }
+</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080" data-om-id="fec22bfb:8" style="--deck-rail-w: 188px;">
+
+  <!-- ============ 01 — TITLE ============ -->
+  <section class="slide deep" data-screen-label="01 Title" data-om-id="fec22bfb:9" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="0">
+    <img class="seed-wm" src="assets/seed-mark.png" alt="" style="right:-130px; top:50%; transform:translateY(-50%); width:760px; opacity:0.16;" data-om-id="fec22bfb:10">
+    <div class="stack" style="height:100%; justify-content:center; gap:34px; max-width:1180px;" data-om-id="fec22bfb:11">
+      <div class="eyebrow" data-om-id="fec22bfb:12">SEEDBiomed Research · Seminar Series</div>
+      <h1 class="display" style="font-size:84px; max-width:18ch;" data-om-id="fec22bfb:13">A clear, specific title for your study or talk</h1>
+      <p class="lead" style="font-size:27px; max-width:42ch;" data-om-id="fec22bfb:14">Presenting author · Co-authors — Department / Institution. Conference or seminar, location, date.</p>
+      <div class="brief" style="max-width:760px; margin-top:14px;" data-om-id="fec22bfb:15">
+        <div class="qmark" data-om-id="fec22bfb:16">?</div>
+        <div data-om-id="fec22bfb:17">
+          <div class="brief-label" data-om-id="fec22bfb:18">Slide Brief</div>
+          <div class="brief-text" data-om-id="fec22bfb:19">What is the <b data-om-id="fec22bfb:20">central question or finding</b> of this work? A strong title states the result or the question — not just the topic.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:21">
+      <span class="brand" data-om-id="fec22bfb:22"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:23">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:24">Author · Affiliation · Date</span>
+    </div>
+  </section>
+
+  <!-- ============ FULL-BLEED IMAGE (image only) ============ -->
+  <section class="slide deep fullbleed" data-screen-label="Full-bleed Image" data-om-id="fec22bfb:500" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="ph fb-image" data-om-id="fec22bfb:501">
+      <span class="ph-fig" data-om-id="fec22bfb:502">Full-bleed image · no caption</span>
+      <span class="corner tl" data-om-id="fec22bfb:503"></span><span class="corner tr" data-om-id="fec22bfb:504"></span><span class="corner bl" data-om-id="fec22bfb:505"></span><span class="corner br" data-om-id="fec22bfb:506"></span>
+      <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fec22bfb:507"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.8"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+      <span class="ph-label" data-om-id="fec22bfb:508">Drag a full-bleed image here</span>
+      <span class="ph-sub" data-om-id="fec22bfb:509">Organism, micrograph, or field image — let it carry the whole slide</span>
+    </div>
+    <div class="fb-scrim" data-om-id="fec22bfb:510"></div>
+    <div class="fb-brand" data-om-id="fec22bfb:511">
+      <img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:512">
+      <span data-om-id="fec22bfb:513">SEEDBiomed</span>
+    </div>
+  </section>
+
+  <!-- ============ 02 — OUTLINE ============ -->
+  <section class="slide" data-screen-label="02 Outline" data-om-id="fec22bfb:25" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="1">
+    <div class="head-block" style="margin-bottom:54px;" data-om-id="fec22bfb:26">
+      <div class="eyebrow" data-om-id="fec22bfb:27">Outline</div>
+      <h2 class="display" data-om-id="fec22bfb:28">Where we're going</h2>
+    </div>
+    <div class="toc" data-om-id="fec22bfb:29">
+      <div class="toc-row" data-om-id="fec22bfb:30"><span class="toc-n" data-om-id="fec22bfb:31">01</span><span class="toc-t" data-om-id="fec22bfb:32">Background &amp; Significance</span><span class="toc-d" data-om-id="fec22bfb:33">What's known</span></div>
+      <div class="toc-row" data-om-id="fec22bfb:34"><span class="toc-n" data-om-id="fec22bfb:35">02</span><span class="toc-t" data-om-id="fec22bfb:36">Question &amp; Hypothesis</span><span class="toc-d" data-om-id="fec22bfb:37">The gap</span></div>
+      <div class="toc-row" data-om-id="fec22bfb:38"><span class="toc-n" data-om-id="fec22bfb:39">03</span><span class="toc-t" data-om-id="fec22bfb:40">Methods &amp; Design</span><span class="toc-d" data-om-id="fec22bfb:41">How we tested it</span></div>
+      <div class="toc-row" data-om-id="fec22bfb:42"><span class="toc-n" data-om-id="fec22bfb:43">04</span><span class="toc-t" data-om-id="fec22bfb:44">Results</span><span class="toc-d" data-om-id="fec22bfb:45">What we found</span></div>
+      <div class="toc-row" data-om-id="fec22bfb:46"><span class="toc-n" data-om-id="fec22bfb:47">05</span><span class="toc-t" data-om-id="fec22bfb:48">Discussion</span><span class="toc-d" data-om-id="fec22bfb:49">What it means</span></div>
+      <div class="toc-row" data-om-id="fec22bfb:50"><span class="toc-n" data-om-id="fec22bfb:51">06</span><span class="toc-t" data-om-id="fec22bfb:52">Conclusions</span><span class="toc-d" data-om-id="fec22bfb:53">Takeaways &amp; credits</span></div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:54">
+      <span class="brand" data-om-id="fec22bfb:55"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:56">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:57"><b data-om-id="fec22bfb:58">03</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 03 — BACKGROUND & SIGNIFICANCE ============ -->
+  <section class="slide" data-screen-label="03 Background" data-om-id="fec22bfb:59" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="2">
+    <div class="two-col" data-om-id="fec22bfb:60">
+      <div class="stack" style="justify-content:center; gap:30px;" data-om-id="fec22bfb:61">
+        <div class="eyebrow" data-om-id="fec22bfb:62">01 · Background</div>
+        <h2 class="display" data-om-id="fec22bfb:63">What the<br data-om-id="fec22bfb:64">field knows</h2>
+        <p class="body-copy" style="max-width:40ch;" data-om-id="fec22bfb:65">Summarise the current state of knowledge and the most relevant prior work. Establish the established consensus, then point to where it stops — the edge of what's understood.</p>
+        <div class="brief" data-om-id="fec22bfb:66">
+          <div class="qmark" data-om-id="fec22bfb:67">?</div>
+          <div data-om-id="fec22bfb:68">
+            <div class="brief-label" data-om-id="fec22bfb:69">Slide Brief</div>
+            <div class="brief-text" data-om-id="fec22bfb:70"><b data-om-id="fec22bfb:71">What is already established, and why does it matter?</b> Cite the key prior findings your work builds on.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ph" style="height:100%;" data-om-id="fec22bfb:72">
+        <span class="ph-fig" data-om-id="fec22bfb:73">Fig. 01 — Context</span>
+        <span class="corner tl" data-om-id="fec22bfb:74"></span><span class="corner tr" data-om-id="fec22bfb:75"></span><span class="corner bl" data-om-id="fec22bfb:76"></span><span class="corner br" data-om-id="fec22bfb:77"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fec22bfb:78"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" data-om-id="fec22bfb:79"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" data-om-id="fec22bfb:80"></path></svg>
+        <span class="ph-label" data-om-id="fec22bfb:81">Background figure</span>
+        <span class="ph-sub" data-om-id="fec22bfb:82">Schematic, timeline, or summary of prior work</span>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:83">
+      <span class="brand" data-om-id="fec22bfb:84"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:85">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:86"><b data-om-id="fec22bfb:87">04</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 04 — QUESTION & HYPOTHESIS ============ -->
+  <section class="slide deep" data-screen-label="04 Question &amp; Hypothesis" data-om-id="fec22bfb:88" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="3">
+    <div class="head-block" style="margin-bottom:60px;" data-om-id="fec22bfb:89">
+      <div class="eyebrow" data-om-id="fec22bfb:90">02 · The Question</div>
+      <h2 class="display" data-om-id="fec22bfb:91">The gap &amp; the <em data-om-id="fec22bfb:92">hypothesis</em></h2>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:54px;" data-om-id="fec22bfb:93">
+      <div class="stack" style="gap:18px;" data-om-id="fec22bfb:94">
+        <span class="pill" data-om-id="fec22bfb:95"><span class="dot" data-om-id="fec22bfb:96"></span>Knowledge gap</span>
+        <p class="display" style="font-size:40px; line-height:1.18;" data-om-id="fec22bfb:97">The specific question prior work leaves unanswered — stated precisely.</p>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fec22bfb:98">
+        <span class="pill" data-om-id="fec22bfb:99"><span class="dot" style="background:var(--amber);" data-om-id="fec22bfb:100"></span>Hypothesis</span>
+        <p class="display" style="font-size:40px; line-height:1.18;" data-om-id="fec22bfb:101">Your testable prediction, and the outcome that would confirm or refute it.</p>
+      </div>
+    </div>
+    <div class="brief" style="margin-top:40px; max-width:980px;" data-om-id="fec22bfb:102">
+      <div class="qmark" data-om-id="fec22bfb:103">?</div>
+      <div data-om-id="fec22bfb:104">
+        <div class="brief-label" data-om-id="fec22bfb:105">Slide Brief</div>
+        <div class="brief-text" data-om-id="fec22bfb:106"><b data-om-id="fec22bfb:107">What is the unanswered question, and what do you predict?</b> Frame a hypothesis that is specific and falsifiable.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:108">
+      <span class="brand" data-om-id="fec22bfb:109"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:110">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:111"><b data-om-id="fec22bfb:112">05</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 05 — METHODS / APPROACH ============ -->
+  <section class="slide" data-screen-label="05 Methods" data-om-id="fec22bfb:113" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="4">
+    <div class="two-col" data-om-id="fec22bfb:114">
+      <div class="ph" style="height:100%;" data-om-id="fec22bfb:115">
+        <span class="ph-fig" data-om-id="fec22bfb:116">Fig. 02 — Workflow</span>
+        <span class="corner tl" data-om-id="fec22bfb:117"></span><span class="corner tr" data-om-id="fec22bfb:118"></span><span class="corner bl" data-om-id="fec22bfb:119"></span><span class="corner br" data-om-id="fec22bfb:120"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fec22bfb:121"><circle cx="12" cy="12" r="3" data-om-id="fec22bfb:122"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" data-om-id="fec22bfb:123"></path></svg>
+        <span class="ph-label" data-om-id="fec22bfb:124">Methods diagram</span>
+        <span class="ph-sub" data-om-id="fec22bfb:125">Experimental design, pipeline, or workflow</span>
+      </div>
+      <div class="stack" style="justify-content:center; gap:30px;" data-om-id="fec22bfb:126">
+        <div class="eyebrow" data-om-id="fec22bfb:127">03 · Methods</div>
+        <h2 class="display" data-om-id="fec22bfb:128">How we<br data-om-id="fec22bfb:129">tested it</h2>
+        <p class="body-copy" style="max-width:40ch;" data-om-id="fec22bfb:130">Describe the approach so it could be reproduced: the model or system, the techniques, and the analysis. Lead with the logic of the design before the technical detail.</p>
+        <div class="brief" data-om-id="fec22bfb:131">
+          <div class="qmark" data-om-id="fec22bfb:132">?</div>
+          <div data-om-id="fec22bfb:133">
+            <div class="brief-label" data-om-id="fec22bfb:134">Slide Brief</div>
+            <div class="brief-text" data-om-id="fec22bfb:135"><b data-om-id="fec22bfb:136">What did you do, and why this design?</b> Give enough detail for the work to be reproduced and trusted.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:137">
+      <span class="brand" data-om-id="fec22bfb:138"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:139">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:140"><b data-om-id="fec22bfb:141">06</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 06 — STUDY DESIGN AT A GLANCE ============ -->
+  <section class="slide" data-screen-label="06 Study Design" data-om-id="fec22bfb:142" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="5">
+    <div class="two-col" data-om-id="fec22bfb:143">
+      <div class="stack" style="justify-content:center; gap:28px;" data-om-id="fec22bfb:144">
+        <div class="eyebrow" data-om-id="fec22bfb:145">03 · Study Design</div>
+        <h2 class="display" data-om-id="fec22bfb:146">The setup,<br data-om-id="fec22bfb:147">at a glance</h2>
+        <div class="stack" style="gap:20px; margin-top:6px;" data-om-id="fec22bfb:148">
+          <div style="display:flex; gap:18px;" data-om-id="fec22bfb:149"><span class="num" data-om-id="fec22bfb:150">01</span><p class="body-copy" style="margin:0;" data-om-id="fec22bfb:151">Sample / system — the cohort, model, or specimens, with size (n) and selection.</p></div>
+          <hr class="hairline" data-om-id="fec22bfb:152">
+          <div style="display:flex; gap:18px;" data-om-id="fec22bfb:153"><span class="num" data-om-id="fec22bfb:154">02</span><p class="body-copy" style="margin:0;" data-om-id="fec22bfb:155">Conditions — the intervention, comparison, or variables manipulated.</p></div>
+          <hr class="hairline" data-om-id="fec22bfb:156">
+          <div style="display:flex; gap:18px;" data-om-id="fec22bfb:157"><span class="num" data-om-id="fec22bfb:158">03</span><p class="body-copy" style="margin:0;" data-om-id="fec22bfb:159">Measures — the primary outcome and the analysis applied to it.</p></div>
+        </div>
+        <div class="brief" style="margin-top:8px;" data-om-id="fec22bfb:160">
+          <div class="qmark" data-om-id="fec22bfb:161">?</div>
+          <div data-om-id="fec22bfb:162">
+            <div class="brief-label" data-om-id="fec22bfb:163">Slide Brief</div>
+            <div class="brief-text" data-om-id="fec22bfb:164"><b data-om-id="fec22bfb:165">Who or what was studied, under what conditions?</b> State sample size, controls, and the primary outcome measure.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ph" style="height:100%;" data-om-id="fec22bfb:166">
+        <span class="ph-fig" data-om-id="fec22bfb:167">Fig. 03 — Setup</span>
+        <span class="corner tl" data-om-id="fec22bfb:168"></span><span class="corner tr" data-om-id="fec22bfb:169"></span><span class="corner bl" data-om-id="fec22bfb:170"></span><span class="corner br" data-om-id="fec22bfb:171"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fec22bfb:172"><path d="M9 3h6M10 3v6.5L5.5 18A2 2 0 007.3 21h9.4a2 2 0 001.8-3L14 9.5V3" data-om-id="fec22bfb:173"></path></svg>
+        <span class="ph-label" data-om-id="fec22bfb:174">Apparatus / sample image</span>
+        <span class="ph-sub" data-om-id="fec22bfb:175">Equipment, preparation, or cohort overview</span>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:176">
+      <span class="brand" data-om-id="fec22bfb:177"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:178">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:179"><b data-om-id="fec22bfb:180">07</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 07 — RESULTS: KEY FINDINGS ============ -->
+  <section class="slide deep" data-screen-label="07 Key Findings" data-om-id="fec22bfb:181" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="6">
+    <div class="head-block" style="margin-bottom:64px;" data-om-id="fec22bfb:182">
+      <div class="eyebrow" data-om-id="fec22bfb:183">04 · Results</div>
+      <h2 class="display" data-om-id="fec22bfb:184">The key <em data-om-id="fec22bfb:185">findings</em></h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;" data-om-id="fec22bfb:186">
+      <div class="stack" data-om-id="fec22bfb:187"><div class="stat-big" data-om-id="fec22bfb:188">0.0<span style="font-size:46px;" data-om-id="fec22bfb:189">×</span></div><p class="stat-label" data-om-id="fec22bfb:190">Primary effect — the magnitude of the difference you observed (effect size).</p></div>
+      <div class="stack" data-om-id="fec22bfb:191"><div class="stat-big cyan" data-om-id="fec22bfb:192">p &lt; .05</div><p class="stat-label" data-om-id="fec22bfb:193">Statistical significance — report the test and exact value where you can.</p></div>
+      <div class="stack" data-om-id="fec22bfb:194"><div class="stat-big" data-om-id="fec22bfb:195">n = 0</div><p class="stat-label" data-om-id="fec22bfb:196">Sample size — the scale on which the result holds.</p></div>
+    </div>
+    <div class="brief" style="margin-top:44px; max-width:980px;" data-om-id="fec22bfb:197">
+      <div class="qmark" data-om-id="fec22bfb:198">?</div>
+      <div data-om-id="fec22bfb:199">
+        <div class="brief-label" data-om-id="fec22bfb:200">Slide Brief</div>
+        <div class="brief-text" data-om-id="fec22bfb:201"><b data-om-id="fec22bfb:202">What are your headline results?</b> Report effect size, significance, and sample — not just the direction of the effect.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:203">
+      <span class="brand" data-om-id="fec22bfb:204"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:205">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:206"><b data-om-id="fec22bfb:207">08</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 08 — RESULTS: PRIMARY FIGURE ============ -->
+  <section class="slide" data-screen-label="08 Primary Figure" data-om-id="fec22bfb:208" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="7">
+    <div class="two-col" data-om-id="fec22bfb:209">
+      <div class="stack" style="justify-content:center; gap:28px;" data-om-id="fec22bfb:210">
+        <div class="eyebrow" data-om-id="fec22bfb:211">04 · Results</div>
+        <h2 class="display" data-om-id="fec22bfb:212">The data</h2>
+        <p class="body-copy" style="max-width:38ch;" data-om-id="fec22bfb:213">Present your primary figure. Orient the audience first — axes, groups, and what a data point is — then walk them to the trend that answers the question.</p>
+        <div style="display:flex; gap:48px; margin-top:6px;" data-om-id="fec22bfb:214">
+          <div data-om-id="fec22bfb:215"><div class="stat-big" style="font-size:58px;" data-om-id="fec22bfb:216">0.00</div><div class="stat-label" data-om-id="fec22bfb:217">Key estimate (95% CI)</div></div>
+          <div data-om-id="fec22bfb:218"><div class="stat-big cyan" style="font-size:58px;" data-om-id="fec22bfb:219">—</div><div class="stat-label" data-om-id="fec22bfb:220">Comparison / control</div></div>
+        </div>
+        <div class="brief" data-om-id="fec22bfb:221">
+          <div class="qmark" data-om-id="fec22bfb:222">?</div>
+          <div data-om-id="fec22bfb:223">
+            <div class="brief-label" data-om-id="fec22bfb:224">Slide Brief</div>
+            <div class="brief-text" data-om-id="fec22bfb:225"><b data-om-id="fec22bfb:226">What does your primary figure show?</b> Explain the axes before the result, and state the one takeaway.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ph" style="height:100%;" data-om-id="fec22bfb:227">
+        <span class="ph-fig" data-om-id="fec22bfb:228">Fig. 04 — Primary result</span>
+        <span class="corner tl" data-om-id="fec22bfb:229"></span><span class="corner tr" data-om-id="fec22bfb:230"></span><span class="corner bl" data-om-id="fec22bfb:231"></span><span class="corner br" data-om-id="fec22bfb:232"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fec22bfb:233"><path d="M3 3v18h18" data-om-id="fec22bfb:234"></path><path d="M7 15l4-5 3 3 5-7" data-om-id="fec22bfb:235"></path></svg>
+        <span class="ph-label" data-om-id="fec22bfb:236">Results figure</span>
+        <span class="ph-sub" data-om-id="fec22bfb:237">Graph, plot, table, or imaging panel</span>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:238">
+      <span class="brand" data-om-id="fec22bfb:239"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:240">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:241"><b data-om-id="fec22bfb:242">09</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 09 — FROM DATA TO MECHANISM ============ -->
+  <section class="slide" data-screen-label="09 Interpretation" data-om-id="fec22bfb:243" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="8">
+    <div class="head-block" style="margin-bottom:56px;" data-om-id="fec22bfb:244">
+      <div class="eyebrow" data-om-id="fec22bfb:245">05 · Discussion</div>
+      <h2 class="display" data-om-id="fec22bfb:246">From data to mechanism</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:34px;" data-om-id="fec22bfb:247">
+      <div class="card" data-om-id="fec22bfb:248"><span class="num" data-om-id="fec22bfb:249">OBSERVATION</span><h3 data-om-id="fec22bfb:250">What we saw</h3><p data-om-id="fec22bfb:251">Restate the result plainly — the pattern that needs explaining.</p></div>
+      <div class="card" data-om-id="fec22bfb:252"><span class="num" data-om-id="fec22bfb:253">MECHANISM</span><h3 data-om-id="fec22bfb:254">Why it happens</h3><p data-om-id="fec22bfb:255">The process or model that best accounts for the observation.</p></div>
+      <div class="card" data-om-id="fec22bfb:256"><span class="num" data-om-id="fec22bfb:257">PREDICTION</span><h3 data-om-id="fec22bfb:258">What it implies</h3><p data-om-id="fec22bfb:259">A further consequence your mechanism predicts — testable next.</p></div>
+    </div>
+    <div class="brief" style="margin-top:40px; max-width:980px;" data-om-id="fec22bfb:260">
+      <div class="qmark" data-om-id="fec22bfb:261">?</div>
+      <div data-om-id="fec22bfb:262">
+        <div class="brief-label" data-om-id="fec22bfb:263">Slide Brief</div>
+        <div class="brief-text" data-om-id="fec22bfb:264"><b data-om-id="fec22bfb:265">How do you explain the results?</b> Connect the finding to a mechanism, and note what that mechanism predicts.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:266">
+      <span class="brand" data-om-id="fec22bfb:267"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:268">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:269"><b data-om-id="fec22bfb:270">10</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 10 — DISCUSSION: MEANING, LIMITS, NEXT ============ -->
+  <section class="slide deep" data-screen-label="10 Discussion" data-om-id="fec22bfb:271" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="9">
+    <div class="head-block" style="margin-bottom:56px;" data-om-id="fec22bfb:272">
+      <div class="eyebrow" data-om-id="fec22bfb:273">05 · Discussion</div>
+      <h2 class="display" data-om-id="fec22bfb:274">Meaning, limits &amp; next steps</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:34px;" data-om-id="fec22bfb:275">
+      <div class="card" data-om-id="fec22bfb:276"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5" data-om-id="fec22bfb:277"><circle cx="12" cy="12" r="9" data-om-id="fec22bfb:278"></circle><path d="M12 7v5l3 3" data-om-id="fec22bfb:279"></path></svg><h3 data-om-id="fec22bfb:280">Implications</h3><p data-om-id="fec22bfb:281">What these findings change for the field, theory, or practice.</p></div>
+      <div class="card" data-om-id="fec22bfb:282"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5" data-om-id="fec22bfb:283"><path d="M10.3 3.7a2 2 0 013.4 0l8 14A2 2 0 0120 21H4a2 2 0 01-1.7-3z" data-om-id="fec22bfb:284"></path><path d="M12 9v4M12 17h.01" data-om-id="fec22bfb:285"></path></svg><h3 data-om-id="fec22bfb:286">Limitations</h3><p data-om-id="fec22bfb:287">Honest constraints — confounds, scope, or what the data can't yet show.</p></div>
+      <div class="card" data-om-id="fec22bfb:288"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.5" data-om-id="fec22bfb:289"><path d="M5 12h14M13 6l6 6-6 6" data-om-id="fec22bfb:290"></path></svg><h3 data-om-id="fec22bfb:291">Future work</h3><p data-om-id="fec22bfb:292">The next experiment, and the open question it would resolve.</p></div>
+    </div>
+    <div class="brief" style="margin-top:38px; max-width:980px;" data-om-id="fec22bfb:293">
+      <div class="qmark" data-om-id="fec22bfb:294">?</div>
+      <div data-om-id="fec22bfb:295">
+        <div class="brief-label" data-om-id="fec22bfb:296">Slide Brief</div>
+        <div class="brief-text" data-om-id="fec22bfb:297"><b data-om-id="fec22bfb:298">What can you conclude, what are the limits, and what's next?</b> Address limitations directly — it builds credibility.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:299">
+      <span class="brand" data-om-id="fec22bfb:300"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:301">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:302"><b data-om-id="fec22bfb:303">11</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ CONTRIBUTORS & ACKNOWLEDGEMENTS ============ -->
+  <section class="slide" data-screen-label="11 Contributors" data-om-id="fec22bfb:304" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="10">
+    <div class="head-block" style="margin-bottom:46px;" data-om-id="fec22bfb:305">
+      <div class="eyebrow" data-om-id="fec22bfb:306">Acknowledgements</div>
+      <h2 class="display" data-om-id="fec22bfb:307">Contributors &amp; support</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:34px;" data-om-id="fec22bfb:308">
+      <div class="stack" style="gap:18px;" data-om-id="fec22bfb:309">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fec22bfb:310"><span class="corner tl" data-om-id="fec22bfb:311"></span><span class="corner tr" data-om-id="fec22bfb:312"></span><span class="corner bl" data-om-id="fec22bfb:313"></span><span class="corner br" data-om-id="fec22bfb:314"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fec22bfb:315"><circle cx="12" cy="8" r="4" data-om-id="fec22bfb:316"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fec22bfb:317"></path></svg><span class="ph-label" data-om-id="fec22bfb:318">Portrait</span></div>
+        <div data-om-id="fec22bfb:319"><div class="display" style="font-size:26px;" data-om-id="fec22bfb:320">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fec22bfb:321">Role · Affiliation</div></div>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fec22bfb:322">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fec22bfb:323"><span class="corner tl" data-om-id="fec22bfb:324"></span><span class="corner tr" data-om-id="fec22bfb:325"></span><span class="corner bl" data-om-id="fec22bfb:326"></span><span class="corner br" data-om-id="fec22bfb:327"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fec22bfb:328"><circle cx="12" cy="8" r="4" data-om-id="fec22bfb:329"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fec22bfb:330"></path></svg><span class="ph-label" data-om-id="fec22bfb:331">Portrait</span></div>
+        <div data-om-id="fec22bfb:332"><div class="display" style="font-size:26px;" data-om-id="fec22bfb:333">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fec22bfb:334">Role · Affiliation</div></div>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fec22bfb:335">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fec22bfb:336"><span class="corner tl" data-om-id="fec22bfb:337"></span><span class="corner tr" data-om-id="fec22bfb:338"></span><span class="corner bl" data-om-id="fec22bfb:339"></span><span class="corner br" data-om-id="fec22bfb:340"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fec22bfb:341"><circle cx="12" cy="8" r="4" data-om-id="fec22bfb:342"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fec22bfb:343"></path></svg><span class="ph-label" data-om-id="fec22bfb:344">Portrait</span></div>
+        <div data-om-id="fec22bfb:345"><div class="display" style="font-size:26px;" data-om-id="fec22bfb:346">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fec22bfb:347">Role · Affiliation</div></div>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fec22bfb:348">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fec22bfb:349"><span class="corner tl" data-om-id="fec22bfb:350"></span><span class="corner tr" data-om-id="fec22bfb:351"></span><span class="corner bl" data-om-id="fec22bfb:352"></span><span class="corner br" data-om-id="fec22bfb:353"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fec22bfb:354"><circle cx="12" cy="8" r="4" data-om-id="fec22bfb:355"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fec22bfb:356"></path></svg><span class="ph-label" data-om-id="fec22bfb:357">Portrait</span></div>
+        <div data-om-id="fec22bfb:358"><div class="display" style="font-size:26px;" data-om-id="fec22bfb:359">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fec22bfb:360">Role · Affiliation</div></div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:20px; margin-top:36px;">
+      <span style="font-family:var(--font-mono); font-size:18px; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-muted);">Funding &amp; support</span>
+      <hr class="hairline" style="flex:1;">
+      <span class="pill">Grant / funder</span>
+      <span class="pill">Institution</span>
+      <span class="pill">Collaborating lab</span>
+    </div>
+    <div class="brief" style="margin-top:30px; max-width:980px;" data-om-id="fec22bfb:367">
+      <div class="qmark" data-om-id="fec22bfb:368">?</div>
+      <div data-om-id="fec22bfb:369">
+        <div class="brief-label" data-om-id="fec22bfb:370">Slide Brief</div>
+        <div class="brief-text" data-om-id="fec22bfb:371"><b data-om-id="fec22bfb:372">Who contributed, and who funded the work?</b> Credit co-authors, collaborators, and funding sources.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:373">
+      <span class="brand" data-om-id="fec22bfb:374"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:375">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:376"><b data-om-id="fec22bfb:377">12</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ CONCLUSIONS ============ -->
+  <section class="slide deep" data-screen-label="12 Conclusions" data-om-id="fec22bfb:378" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="11" data-deck-last-visible="">
+    <img class="seed-wm" src="assets/seed-mark.png" alt="" style="left:-140px; bottom:-160px; width:620px; opacity:0.14;" data-om-id="fec22bfb:379">
+    <div class="stack" style="height:100%; justify-content:center; gap:34px; max-width:1140px;" data-om-id="fec22bfb:380">
+      <div class="eyebrow" data-om-id="fec22bfb:381">06 · Conclusions</div>
+      <h1 class="display" style="font-size:92px; max-width:20ch;" data-om-id="fec22bfb:382">The one thing to <em data-om-id="fec22bfb:383">take away</em></h1>
+      <p class="lead" style="font-size:29px; max-width:40ch;" data-om-id="fec22bfb:384">State your central conclusion in a single sentence — the finding you want the room to remember and cite.</p>
+      <div style="display:flex; gap:40px; align-items:center; margin-top:12px; flex-wrap:wrap; font-family:var(--font-mono); font-size:19px; color:var(--text-secondary); letter-spacing:0.06em;" data-om-id="fec22bfb:385">
+        <span data-om-id="fec22bfb:386">Preprint / DOI</span>
+        <span style="color:var(--text-muted);" data-om-id="fec22bfb:387">·</span>
+        <span data-om-id="fec22bfb:388">lab.seedbiomed.com</span>
+        <span style="color:var(--text-muted);" data-om-id="fec22bfb:389">·</span>
+        <span data-om-id="fec22bfb:390">author@seedbiomed.com</span>
+      </div>
+      <div class="brief" style="max-width:760px; margin-top:14px;" data-om-id="fec22bfb:391">
+        <div class="qmark" data-om-id="fec22bfb:392">?</div>
+        <div data-om-id="fec22bfb:393">
+          <div class="brief-label" data-om-id="fec22bfb:394">Slide Brief</div>
+          <div class="brief-text" data-om-id="fec22bfb:395"><b data-om-id="fec22bfb:396">What is the single finding you want remembered?</b> End on the conclusion, and point to where the work can be read in full.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fec22bfb:397">
+      <span class="brand" data-om-id="fec22bfb:398"><img src="assets/seed-mark.png" alt="" data-om-id="fec22bfb:399">SEEDBiomed</span>
+      <span class="pg" data-om-id="fec22bfb:400"><b data-om-id="fec22bfb:401">13</b> / 13</span>
+    </div>
+  </section>
+
+
+
+  <!-- ===================== WHITE DECK ===================== -->
+
+
+  <!-- ============ 01 — TITLE ============ -->
+  <section class="slide theme-white deep" data-screen-label="White · Title" data-om-id="fecW:9" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <img class="seed-wm" src="assets/seed-mark.png" alt="" style="right:-130px; top:50%; transform:translateY(-50%); width:760px; opacity:0.16;" data-om-id="fecW:10">
+    <div class="stack" style="height:100%; justify-content:center; gap:34px; max-width:1180px;" data-om-id="fecW:11">
+      <div class="eyebrow" data-om-id="fecW:12">SEEDBiomed Research · Seminar Series</div>
+      <h1 class="display" style="font-size:84px; max-width:18ch;" data-om-id="fecW:13">A clear, specific title for your study or talk</h1>
+      <p class="lead" style="font-size:27px; max-width:42ch;" data-om-id="fecW:14">Presenting author · Co-authors — Department / Institution. Conference or seminar, location, date.</p>
+      <div class="brief" style="max-width:760px; margin-top:14px;" data-om-id="fecW:15">
+        <div class="qmark" data-om-id="fecW:16">?</div>
+        <div data-om-id="fecW:17">
+          <div class="brief-label" data-om-id="fecW:18">Slide Brief</div>
+          <div class="brief-text" data-om-id="fecW:19">What is the <b data-om-id="fecW:20">central question or finding</b> of this work? A strong title states the result or the question — not just the topic.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:21">
+      <span class="brand" data-om-id="fecW:22"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:23">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:24">Author · Affiliation · Date</span>
+    </div>
+  </section>
+
+  <!-- ============ FULL-BLEED IMAGE (image only) ============ -->
+  <section class="slide theme-white deep fullbleed" data-screen-label="White · Full-bleed Image" data-om-id="fecW:500" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="ph fb-image" data-om-id="fecW:501">
+      <span class="ph-fig" data-om-id="fecW:502">Full-bleed image · no caption</span>
+      <span class="corner tl" data-om-id="fecW:503"></span><span class="corner tr" data-om-id="fecW:504"></span><span class="corner bl" data-om-id="fecW:505"></span><span class="corner br" data-om-id="fecW:506"></span>
+      <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecW:507"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.8"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+      <span class="ph-label" data-om-id="fecW:508">Drag a full-bleed image here</span>
+      <span class="ph-sub" data-om-id="fecW:509">Organism, micrograph, or field image — let it carry the whole slide</span>
+    </div>
+    <div class="fb-scrim" data-om-id="fecW:510"></div>
+    <div class="fb-brand" data-om-id="fecW:511">
+      <img src="assets/seed-mark.png" alt="" data-om-id="fecW:512">
+      <span data-om-id="fecW:513">SEEDBiomed</span>
+    </div>
+  </section>
+
+  <!-- ============ 02 — OUTLINE ============ -->
+  <section class="slide theme-white" data-screen-label="White · Outline" data-om-id="fecW:25" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:54px;" data-om-id="fecW:26">
+      <div class="eyebrow" data-om-id="fecW:27">Outline</div>
+      <h2 class="display" data-om-id="fecW:28">Where we're going</h2>
+    </div>
+    <div class="toc" data-om-id="fecW:29">
+      <div class="toc-row" data-om-id="fecW:30"><span class="toc-n" data-om-id="fecW:31">01</span><span class="toc-t" data-om-id="fecW:32">Background &amp; Significance</span><span class="toc-d" data-om-id="fecW:33">What's known</span></div>
+      <div class="toc-row" data-om-id="fecW:34"><span class="toc-n" data-om-id="fecW:35">02</span><span class="toc-t" data-om-id="fecW:36">Question &amp; Hypothesis</span><span class="toc-d" data-om-id="fecW:37">The gap</span></div>
+      <div class="toc-row" data-om-id="fecW:38"><span class="toc-n" data-om-id="fecW:39">03</span><span class="toc-t" data-om-id="fecW:40">Methods &amp; Design</span><span class="toc-d" data-om-id="fecW:41">How we tested it</span></div>
+      <div class="toc-row" data-om-id="fecW:42"><span class="toc-n" data-om-id="fecW:43">04</span><span class="toc-t" data-om-id="fecW:44">Results</span><span class="toc-d" data-om-id="fecW:45">What we found</span></div>
+      <div class="toc-row" data-om-id="fecW:46"><span class="toc-n" data-om-id="fecW:47">05</span><span class="toc-t" data-om-id="fecW:48">Discussion</span><span class="toc-d" data-om-id="fecW:49">What it means</span></div>
+      <div class="toc-row" data-om-id="fecW:50"><span class="toc-n" data-om-id="fecW:51">06</span><span class="toc-t" data-om-id="fecW:52">Conclusions</span><span class="toc-d" data-om-id="fecW:53">Takeaways &amp; credits</span></div>
+    </div>
+    <div class="footer" data-om-id="fecW:54">
+      <span class="brand" data-om-id="fecW:55"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:56">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:57"><b data-om-id="fecW:58">03</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 03 — BACKGROUND & SIGNIFICANCE ============ -->
+  <section class="slide theme-white" data-screen-label="White · Background" data-om-id="fecW:59" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="two-col" data-om-id="fecW:60">
+      <div class="stack" style="justify-content:center; gap:30px;" data-om-id="fecW:61">
+        <div class="eyebrow" data-om-id="fecW:62">01 · Background</div>
+        <h2 class="display" data-om-id="fecW:63">What the<br data-om-id="fecW:64">field knows</h2>
+        <p class="body-copy" style="max-width:40ch;" data-om-id="fecW:65">Summarise the current state of knowledge and the most relevant prior work. Establish the established consensus, then point to where it stops — the edge of what's understood.</p>
+        <div class="brief" data-om-id="fecW:66">
+          <div class="qmark" data-om-id="fecW:67">?</div>
+          <div data-om-id="fecW:68">
+            <div class="brief-label" data-om-id="fecW:69">Slide Brief</div>
+            <div class="brief-text" data-om-id="fecW:70"><b data-om-id="fecW:71">What is already established, and why does it matter?</b> Cite the key prior findings your work builds on.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ph" style="height:100%;" data-om-id="fecW:72">
+        <span class="ph-fig" data-om-id="fecW:73">Fig. 01 — Context</span>
+        <span class="corner tl" data-om-id="fecW:74"></span><span class="corner tr" data-om-id="fecW:75"></span><span class="corner bl" data-om-id="fecW:76"></span><span class="corner br" data-om-id="fecW:77"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecW:78"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" data-om-id="fecW:79"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" data-om-id="fecW:80"></path></svg>
+        <span class="ph-label" data-om-id="fecW:81">Background figure</span>
+        <span class="ph-sub" data-om-id="fecW:82">Schematic, timeline, or summary of prior work</span>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:83">
+      <span class="brand" data-om-id="fecW:84"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:85">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:86"><b data-om-id="fecW:87">04</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 04 — QUESTION & HYPOTHESIS ============ -->
+  <section class="slide theme-white deep" data-screen-label="White · Question &amp; Hypothesis" data-om-id="fecW:88" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:60px;" data-om-id="fecW:89">
+      <div class="eyebrow" data-om-id="fecW:90">02 · The Question</div>
+      <h2 class="display" data-om-id="fecW:91">The gap &amp; the <em data-om-id="fecW:92">hypothesis</em></h2>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:54px;" data-om-id="fecW:93">
+      <div class="stack" style="gap:18px;" data-om-id="fecW:94">
+        <span class="pill" data-om-id="fecW:95"><span class="dot" data-om-id="fecW:96"></span>Knowledge gap</span>
+        <p class="display" style="font-size:40px; line-height:1.18;" data-om-id="fecW:97">The specific question prior work leaves unanswered — stated precisely.</p>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fecW:98">
+        <span class="pill" data-om-id="fecW:99"><span class="dot" style="background:var(--amber);" data-om-id="fecW:100"></span>Hypothesis</span>
+        <p class="display" style="font-size:40px; line-height:1.18;" data-om-id="fecW:101">Your testable prediction, and the outcome that would confirm or refute it.</p>
+      </div>
+    </div>
+    <div class="brief" style="margin-top:40px; max-width:980px;" data-om-id="fecW:102">
+      <div class="qmark" data-om-id="fecW:103">?</div>
+      <div data-om-id="fecW:104">
+        <div class="brief-label" data-om-id="fecW:105">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecW:106"><b data-om-id="fecW:107">What is the unanswered question, and what do you predict?</b> Frame a hypothesis that is specific and falsifiable.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:108">
+      <span class="brand" data-om-id="fecW:109"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:110">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:111"><b data-om-id="fecW:112">05</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 05 — METHODS / APPROACH ============ -->
+  <section class="slide theme-white" data-screen-label="White · Methods" data-om-id="fecW:113" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="two-col" data-om-id="fecW:114">
+      <div class="ph" style="height:100%;" data-om-id="fecW:115">
+        <span class="ph-fig" data-om-id="fecW:116">Fig. 02 — Workflow</span>
+        <span class="corner tl" data-om-id="fecW:117"></span><span class="corner tr" data-om-id="fecW:118"></span><span class="corner bl" data-om-id="fecW:119"></span><span class="corner br" data-om-id="fecW:120"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecW:121"><circle cx="12" cy="12" r="3" data-om-id="fecW:122"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" data-om-id="fecW:123"></path></svg>
+        <span class="ph-label" data-om-id="fecW:124">Methods diagram</span>
+        <span class="ph-sub" data-om-id="fecW:125">Experimental design, pipeline, or workflow</span>
+      </div>
+      <div class="stack" style="justify-content:center; gap:30px;" data-om-id="fecW:126">
+        <div class="eyebrow" data-om-id="fecW:127">03 · Methods</div>
+        <h2 class="display" data-om-id="fecW:128">How we<br data-om-id="fecW:129">tested it</h2>
+        <p class="body-copy" style="max-width:40ch;" data-om-id="fecW:130">Describe the approach so it could be reproduced: the model or system, the techniques, and the analysis. Lead with the logic of the design before the technical detail.</p>
+        <div class="brief" data-om-id="fecW:131">
+          <div class="qmark" data-om-id="fecW:132">?</div>
+          <div data-om-id="fecW:133">
+            <div class="brief-label" data-om-id="fecW:134">Slide Brief</div>
+            <div class="brief-text" data-om-id="fecW:135"><b data-om-id="fecW:136">What did you do, and why this design?</b> Give enough detail for the work to be reproduced and trusted.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:137">
+      <span class="brand" data-om-id="fecW:138"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:139">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:140"><b data-om-id="fecW:141">06</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 06 — STUDY DESIGN AT A GLANCE ============ -->
+  <section class="slide theme-white" data-screen-label="White · Study Design" data-om-id="fecW:142" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="two-col" data-om-id="fecW:143">
+      <div class="stack" style="justify-content:center; gap:28px;" data-om-id="fecW:144">
+        <div class="eyebrow" data-om-id="fecW:145">03 · Study Design</div>
+        <h2 class="display" data-om-id="fecW:146">The setup,<br data-om-id="fecW:147">at a glance</h2>
+        <div class="stack" style="gap:20px; margin-top:6px;" data-om-id="fecW:148">
+          <div style="display:flex; gap:18px;" data-om-id="fecW:149"><span class="num" data-om-id="fecW:150">01</span><p class="body-copy" style="margin:0;" data-om-id="fecW:151">Sample / system — the cohort, model, or specimens, with size (n) and selection.</p></div>
+          <hr class="hairline" data-om-id="fecW:152">
+          <div style="display:flex; gap:18px;" data-om-id="fecW:153"><span class="num" data-om-id="fecW:154">02</span><p class="body-copy" style="margin:0;" data-om-id="fecW:155">Conditions — the intervention, comparison, or variables manipulated.</p></div>
+          <hr class="hairline" data-om-id="fecW:156">
+          <div style="display:flex; gap:18px;" data-om-id="fecW:157"><span class="num" data-om-id="fecW:158">03</span><p class="body-copy" style="margin:0;" data-om-id="fecW:159">Measures — the primary outcome and the analysis applied to it.</p></div>
+        </div>
+        <div class="brief" style="margin-top:8px;" data-om-id="fecW:160">
+          <div class="qmark" data-om-id="fecW:161">?</div>
+          <div data-om-id="fecW:162">
+            <div class="brief-label" data-om-id="fecW:163">Slide Brief</div>
+            <div class="brief-text" data-om-id="fecW:164"><b data-om-id="fecW:165">Who or what was studied, under what conditions?</b> State sample size, controls, and the primary outcome measure.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ph" style="height:100%;" data-om-id="fecW:166">
+        <span class="ph-fig" data-om-id="fecW:167">Fig. 03 — Setup</span>
+        <span class="corner tl" data-om-id="fecW:168"></span><span class="corner tr" data-om-id="fecW:169"></span><span class="corner bl" data-om-id="fecW:170"></span><span class="corner br" data-om-id="fecW:171"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecW:172"><path d="M9 3h6M10 3v6.5L5.5 18A2 2 0 007.3 21h9.4a2 2 0 001.8-3L14 9.5V3" data-om-id="fecW:173"></path></svg>
+        <span class="ph-label" data-om-id="fecW:174">Apparatus / sample image</span>
+        <span class="ph-sub" data-om-id="fecW:175">Equipment, preparation, or cohort overview</span>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:176">
+      <span class="brand" data-om-id="fecW:177"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:178">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:179"><b data-om-id="fecW:180">07</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 07 — RESULTS: KEY FINDINGS ============ -->
+  <section class="slide theme-white deep" data-screen-label="White · Key Findings" data-om-id="fecW:181" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:64px;" data-om-id="fecW:182">
+      <div class="eyebrow" data-om-id="fecW:183">04 · Results</div>
+      <h2 class="display" data-om-id="fecW:184">The key <em data-om-id="fecW:185">findings</em></h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;" data-om-id="fecW:186">
+      <div class="stack" data-om-id="fecW:187"><div class="stat-big" data-om-id="fecW:188">0.0<span style="font-size:46px;" data-om-id="fecW:189">×</span></div><p class="stat-label" data-om-id="fecW:190">Primary effect — the magnitude of the difference you observed (effect size).</p></div>
+      <div class="stack" data-om-id="fecW:191"><div class="stat-big cyan" data-om-id="fecW:192">p &lt; .05</div><p class="stat-label" data-om-id="fecW:193">Statistical significance — report the test and exact value where you can.</p></div>
+      <div class="stack" data-om-id="fecW:194"><div class="stat-big" data-om-id="fecW:195">n = 0</div><p class="stat-label" data-om-id="fecW:196">Sample size — the scale on which the result holds.</p></div>
+    </div>
+    <div class="brief" style="margin-top:44px; max-width:980px;" data-om-id="fecW:197">
+      <div class="qmark" data-om-id="fecW:198">?</div>
+      <div data-om-id="fecW:199">
+        <div class="brief-label" data-om-id="fecW:200">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecW:201"><b data-om-id="fecW:202">What are your headline results?</b> Report effect size, significance, and sample — not just the direction of the effect.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:203">
+      <span class="brand" data-om-id="fecW:204"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:205">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:206"><b data-om-id="fecW:207">08</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 08 — RESULTS: PRIMARY FIGURE ============ -->
+  <section class="slide theme-white" data-screen-label="White · Primary Figure" data-om-id="fecW:208" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="two-col" data-om-id="fecW:209">
+      <div class="stack" style="justify-content:center; gap:28px;" data-om-id="fecW:210">
+        <div class="eyebrow" data-om-id="fecW:211">04 · Results</div>
+        <h2 class="display" data-om-id="fecW:212">The data</h2>
+        <p class="body-copy" style="max-width:38ch;" data-om-id="fecW:213">Present your primary figure. Orient the audience first — axes, groups, and what a data point is — then walk them to the trend that answers the question.</p>
+        <div style="display:flex; gap:48px; margin-top:6px;" data-om-id="fecW:214">
+          <div data-om-id="fecW:215"><div class="stat-big" style="font-size:58px;" data-om-id="fecW:216">0.00</div><div class="stat-label" data-om-id="fecW:217">Key estimate (95% CI)</div></div>
+          <div data-om-id="fecW:218"><div class="stat-big cyan" style="font-size:58px;" data-om-id="fecW:219">—</div><div class="stat-label" data-om-id="fecW:220">Comparison / control</div></div>
+        </div>
+        <div class="brief" data-om-id="fecW:221">
+          <div class="qmark" data-om-id="fecW:222">?</div>
+          <div data-om-id="fecW:223">
+            <div class="brief-label" data-om-id="fecW:224">Slide Brief</div>
+            <div class="brief-text" data-om-id="fecW:225"><b data-om-id="fecW:226">What does your primary figure show?</b> Explain the axes before the result, and state the one takeaway.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ph" style="height:100%;" data-om-id="fecW:227">
+        <span class="ph-fig" data-om-id="fecW:228">Fig. 04 — Primary result</span>
+        <span class="corner tl" data-om-id="fecW:229"></span><span class="corner tr" data-om-id="fecW:230"></span><span class="corner bl" data-om-id="fecW:231"></span><span class="corner br" data-om-id="fecW:232"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecW:233"><path d="M3 3v18h18" data-om-id="fecW:234"></path><path d="M7 15l4-5 3 3 5-7" data-om-id="fecW:235"></path></svg>
+        <span class="ph-label" data-om-id="fecW:236">Results figure</span>
+        <span class="ph-sub" data-om-id="fecW:237">Graph, plot, table, or imaging panel</span>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:238">
+      <span class="brand" data-om-id="fecW:239"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:240">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:241"><b data-om-id="fecW:242">09</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 09 — FROM DATA TO MECHANISM ============ -->
+  <section class="slide theme-white" data-screen-label="White · Interpretation" data-om-id="fecW:243" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:56px;" data-om-id="fecW:244">
+      <div class="eyebrow" data-om-id="fecW:245">05 · Discussion</div>
+      <h2 class="display" data-om-id="fecW:246">From data to mechanism</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:34px;" data-om-id="fecW:247">
+      <div class="card" data-om-id="fecW:248"><span class="num" data-om-id="fecW:249">OBSERVATION</span><h3 data-om-id="fecW:250">What we saw</h3><p data-om-id="fecW:251">Restate the result plainly — the pattern that needs explaining.</p></div>
+      <div class="card" data-om-id="fecW:252"><span class="num" data-om-id="fecW:253">MECHANISM</span><h3 data-om-id="fecW:254">Why it happens</h3><p data-om-id="fecW:255">The process or model that best accounts for the observation.</p></div>
+      <div class="card" data-om-id="fecW:256"><span class="num" data-om-id="fecW:257">PREDICTION</span><h3 data-om-id="fecW:258">What it implies</h3><p data-om-id="fecW:259">A further consequence your mechanism predicts — testable next.</p></div>
+    </div>
+    <div class="brief" style="margin-top:40px; max-width:980px;" data-om-id="fecW:260">
+      <div class="qmark" data-om-id="fecW:261">?</div>
+      <div data-om-id="fecW:262">
+        <div class="brief-label" data-om-id="fecW:263">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecW:264"><b data-om-id="fecW:265">How do you explain the results?</b> Connect the finding to a mechanism, and note what that mechanism predicts.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:266">
+      <span class="brand" data-om-id="fecW:267"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:268">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:269"><b data-om-id="fecW:270">10</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 10 — DISCUSSION: MEANING, LIMITS, NEXT ============ -->
+  <section class="slide theme-white deep" data-screen-label="White · Discussion" data-om-id="fecW:271" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:56px;" data-om-id="fecW:272">
+      <div class="eyebrow" data-om-id="fecW:273">05 · Discussion</div>
+      <h2 class="display" data-om-id="fecW:274">Meaning, limits &amp; next steps</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:34px;" data-om-id="fecW:275">
+      <div class="card" data-om-id="fecW:276"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5" data-om-id="fecW:277"><circle cx="12" cy="12" r="9" data-om-id="fecW:278"></circle><path d="M12 7v5l3 3" data-om-id="fecW:279"></path></svg><h3 data-om-id="fecW:280">Implications</h3><p data-om-id="fecW:281">What these findings change for the field, theory, or practice.</p></div>
+      <div class="card" data-om-id="fecW:282"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5" data-om-id="fecW:283"><path d="M10.3 3.7a2 2 0 013.4 0l8 14A2 2 0 0120 21H4a2 2 0 01-1.7-3z" data-om-id="fecW:284"></path><path d="M12 9v4M12 17h.01" data-om-id="fecW:285"></path></svg><h3 data-om-id="fecW:286">Limitations</h3><p data-om-id="fecW:287">Honest constraints — confounds, scope, or what the data can't yet show.</p></div>
+      <div class="card" data-om-id="fecW:288"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.5" data-om-id="fecW:289"><path d="M5 12h14M13 6l6 6-6 6" data-om-id="fecW:290"></path></svg><h3 data-om-id="fecW:291">Future work</h3><p data-om-id="fecW:292">The next experiment, and the open question it would resolve.</p></div>
+    </div>
+    <div class="brief" style="margin-top:38px; max-width:980px;" data-om-id="fecW:293">
+      <div class="qmark" data-om-id="fecW:294">?</div>
+      <div data-om-id="fecW:295">
+        <div class="brief-label" data-om-id="fecW:296">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecW:297"><b data-om-id="fecW:298">What can you conclude, what are the limits, and what's next?</b> Address limitations directly — it builds credibility.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:299">
+      <span class="brand" data-om-id="fecW:300"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:301">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:302"><b data-om-id="fecW:303">11</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ CONTRIBUTORS & ACKNOWLEDGEMENTS ============ -->
+  <section class="slide theme-white" data-screen-label="White · Contributors" data-om-id="fecW:304" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:46px;" data-om-id="fecW:305">
+      <div class="eyebrow" data-om-id="fecW:306">Acknowledgements</div>
+      <h2 class="display" data-om-id="fecW:307">Contributors &amp; support</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:34px;" data-om-id="fecW:308">
+      <div class="stack" style="gap:18px;" data-om-id="fecW:309">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fecW:310"><span class="corner tl" data-om-id="fecW:311"></span><span class="corner tr" data-om-id="fecW:312"></span><span class="corner bl" data-om-id="fecW:313"></span><span class="corner br" data-om-id="fecW:314"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecW:315"><circle cx="12" cy="8" r="4" data-om-id="fecW:316"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fecW:317"></path></svg><span class="ph-label" data-om-id="fecW:318">Portrait</span></div>
+        <div data-om-id="fecW:319"><div class="display" style="font-size:26px;" data-om-id="fecW:320">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fecW:321">Role · Affiliation</div></div>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fecW:322">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fecW:323"><span class="corner tl" data-om-id="fecW:324"></span><span class="corner tr" data-om-id="fecW:325"></span><span class="corner bl" data-om-id="fecW:326"></span><span class="corner br" data-om-id="fecW:327"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecW:328"><circle cx="12" cy="8" r="4" data-om-id="fecW:329"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fecW:330"></path></svg><span class="ph-label" data-om-id="fecW:331">Portrait</span></div>
+        <div data-om-id="fecW:332"><div class="display" style="font-size:26px;" data-om-id="fecW:333">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fecW:334">Role · Affiliation</div></div>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fecW:335">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fecW:336"><span class="corner tl" data-om-id="fecW:337"></span><span class="corner tr" data-om-id="fecW:338"></span><span class="corner bl" data-om-id="fecW:339"></span><span class="corner br" data-om-id="fecW:340"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecW:341"><circle cx="12" cy="8" r="4" data-om-id="fecW:342"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fecW:343"></path></svg><span class="ph-label" data-om-id="fecW:344">Portrait</span></div>
+        <div data-om-id="fecW:345"><div class="display" style="font-size:26px;" data-om-id="fecW:346">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fecW:347">Role · Affiliation</div></div>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fecW:348">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fecW:349"><span class="corner tl" data-om-id="fecW:350"></span><span class="corner tr" data-om-id="fecW:351"></span><span class="corner bl" data-om-id="fecW:352"></span><span class="corner br" data-om-id="fecW:353"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecW:354"><circle cx="12" cy="8" r="4" data-om-id="fecW:355"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fecW:356"></path></svg><span class="ph-label" data-om-id="fecW:357">Portrait</span></div>
+        <div data-om-id="fecW:358"><div class="display" style="font-size:26px;" data-om-id="fecW:359">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fecW:360">Role · Affiliation</div></div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:20px; margin-top:36px;">
+      <span style="font-family:var(--font-mono); font-size:18px; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-muted);">Funding &amp; support</span>
+      <hr class="hairline" style="flex:1;">
+      <span class="pill">Grant / funder</span>
+      <span class="pill">Institution</span>
+      <span class="pill">Collaborating lab</span>
+    </div>
+    <div class="brief" style="margin-top:30px; max-width:980px;" data-om-id="fecW:367">
+      <div class="qmark" data-om-id="fecW:368">?</div>
+      <div data-om-id="fecW:369">
+        <div class="brief-label" data-om-id="fecW:370">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecW:371"><b data-om-id="fecW:372">Who contributed, and who funded the work?</b> Credit co-authors, collaborators, and funding sources.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:373">
+      <span class="brand" data-om-id="fecW:374"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:375">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:376"><b data-om-id="fecW:377">12</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ CONCLUSIONS ============ -->
+  <section class="slide theme-white deep" data-screen-label="White · Conclusions" data-om-id="fecW:378" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <img class="seed-wm" src="assets/seed-mark.png" alt="" style="left:-140px; bottom:-160px; width:620px; opacity:0.14;" data-om-id="fecW:379">
+    <div class="stack" style="height:100%; justify-content:center; gap:34px; max-width:1140px;" data-om-id="fecW:380">
+      <div class="eyebrow" data-om-id="fecW:381">06 · Conclusions</div>
+      <h1 class="display" style="font-size:92px; max-width:20ch;" data-om-id="fecW:382">The one thing to <em data-om-id="fecW:383">take away</em></h1>
+      <p class="lead" style="font-size:29px; max-width:40ch;" data-om-id="fecW:384">State your central conclusion in a single sentence — the finding you want the room to remember and cite.</p>
+      <div style="display:flex; gap:40px; align-items:center; margin-top:12px; flex-wrap:wrap; font-family:var(--font-mono); font-size:19px; color:var(--text-secondary); letter-spacing:0.06em;" data-om-id="fecW:385">
+        <span data-om-id="fecW:386">Preprint / DOI</span>
+        <span style="color:var(--text-muted);" data-om-id="fecW:387">·</span>
+        <span data-om-id="fecW:388">lab.seedbiomed.com</span>
+        <span style="color:var(--text-muted);" data-om-id="fecW:389">·</span>
+        <span data-om-id="fecW:390">author@seedbiomed.com</span>
+      </div>
+      <div class="brief" style="max-width:760px; margin-top:14px;" data-om-id="fecW:391">
+        <div class="qmark" data-om-id="fecW:392">?</div>
+        <div data-om-id="fecW:393">
+          <div class="brief-label" data-om-id="fecW:394">Slide Brief</div>
+          <div class="brief-text" data-om-id="fecW:395"><b data-om-id="fecW:396">What is the single finding you want remembered?</b> End on the conclusion, and point to where the work can be read in full.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecW:397">
+      <span class="brand" data-om-id="fecW:398"><img src="assets/seed-mark.png" alt="" data-om-id="fecW:399">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecW:400"><b data-om-id="fecW:401">13</b> / 13</span>
+    </div>
+  </section>
+
+
+
+  <!-- ===================== BLACK DECK ===================== -->
+
+
+  <!-- ============ 01 — TITLE ============ -->
+  <section class="slide theme-black deep" data-screen-label="Black · Title" data-om-id="fecB:9" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <img class="seed-wm" src="assets/seed-mark.png" alt="" style="right:-130px; top:50%; transform:translateY(-50%); width:760px; opacity:0.16;" data-om-id="fecB:10">
+    <div class="stack" style="height:100%; justify-content:center; gap:34px; max-width:1180px;" data-om-id="fecB:11">
+      <div class="eyebrow" data-om-id="fecB:12">SEEDBiomed Research · Seminar Series</div>
+      <h1 class="display" style="font-size:84px; max-width:18ch;" data-om-id="fecB:13">A clear, specific title for your study or talk</h1>
+      <p class="lead" style="font-size:27px; max-width:42ch;" data-om-id="fecB:14">Presenting author · Co-authors — Department / Institution. Conference or seminar, location, date.</p>
+      <div class="brief" style="max-width:760px; margin-top:14px;" data-om-id="fecB:15">
+        <div class="qmark" data-om-id="fecB:16">?</div>
+        <div data-om-id="fecB:17">
+          <div class="brief-label" data-om-id="fecB:18">Slide Brief</div>
+          <div class="brief-text" data-om-id="fecB:19">What is the <b data-om-id="fecB:20">central question or finding</b> of this work? A strong title states the result or the question — not just the topic.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:21">
+      <span class="brand" data-om-id="fecB:22"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:23">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:24">Author · Affiliation · Date</span>
+    </div>
+  </section>
+
+  <!-- ============ FULL-BLEED IMAGE (image only) ============ -->
+  <section class="slide theme-black deep fullbleed" data-screen-label="Black · Full-bleed Image" data-om-id="fecB:500" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="ph fb-image" data-om-id="fecB:501">
+      <span class="ph-fig" data-om-id="fecB:502">Full-bleed image · no caption</span>
+      <span class="corner tl" data-om-id="fecB:503"></span><span class="corner tr" data-om-id="fecB:504"></span><span class="corner bl" data-om-id="fecB:505"></span><span class="corner br" data-om-id="fecB:506"></span>
+      <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecB:507"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.8"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+      <span class="ph-label" data-om-id="fecB:508">Drag a full-bleed image here</span>
+      <span class="ph-sub" data-om-id="fecB:509">Organism, micrograph, or field image — let it carry the whole slide</span>
+    </div>
+    <div class="fb-scrim" data-om-id="fecB:510"></div>
+    <div class="fb-brand" data-om-id="fecB:511">
+      <img src="assets/seed-mark.png" alt="" data-om-id="fecB:512">
+      <span data-om-id="fecB:513">SEEDBiomed</span>
+    </div>
+  </section>
+
+  <!-- ============ 02 — OUTLINE ============ -->
+  <section class="slide theme-black" data-screen-label="Black · Outline" data-om-id="fecB:25" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:54px;" data-om-id="fecB:26">
+      <div class="eyebrow" data-om-id="fecB:27">Outline</div>
+      <h2 class="display" data-om-id="fecB:28">Where we're going</h2>
+    </div>
+    <div class="toc" data-om-id="fecB:29">
+      <div class="toc-row" data-om-id="fecB:30"><span class="toc-n" data-om-id="fecB:31">01</span><span class="toc-t" data-om-id="fecB:32">Background &amp; Significance</span><span class="toc-d" data-om-id="fecB:33">What's known</span></div>
+      <div class="toc-row" data-om-id="fecB:34"><span class="toc-n" data-om-id="fecB:35">02</span><span class="toc-t" data-om-id="fecB:36">Question &amp; Hypothesis</span><span class="toc-d" data-om-id="fecB:37">The gap</span></div>
+      <div class="toc-row" data-om-id="fecB:38"><span class="toc-n" data-om-id="fecB:39">03</span><span class="toc-t" data-om-id="fecB:40">Methods &amp; Design</span><span class="toc-d" data-om-id="fecB:41">How we tested it</span></div>
+      <div class="toc-row" data-om-id="fecB:42"><span class="toc-n" data-om-id="fecB:43">04</span><span class="toc-t" data-om-id="fecB:44">Results</span><span class="toc-d" data-om-id="fecB:45">What we found</span></div>
+      <div class="toc-row" data-om-id="fecB:46"><span class="toc-n" data-om-id="fecB:47">05</span><span class="toc-t" data-om-id="fecB:48">Discussion</span><span class="toc-d" data-om-id="fecB:49">What it means</span></div>
+      <div class="toc-row" data-om-id="fecB:50"><span class="toc-n" data-om-id="fecB:51">06</span><span class="toc-t" data-om-id="fecB:52">Conclusions</span><span class="toc-d" data-om-id="fecB:53">Takeaways &amp; credits</span></div>
+    </div>
+    <div class="footer" data-om-id="fecB:54">
+      <span class="brand" data-om-id="fecB:55"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:56">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:57"><b data-om-id="fecB:58">03</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 03 — BACKGROUND & SIGNIFICANCE ============ -->
+  <section class="slide theme-black" data-screen-label="Black · Background" data-om-id="fecB:59" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="two-col" data-om-id="fecB:60">
+      <div class="stack" style="justify-content:center; gap:30px;" data-om-id="fecB:61">
+        <div class="eyebrow" data-om-id="fecB:62">01 · Background</div>
+        <h2 class="display" data-om-id="fecB:63">What the<br data-om-id="fecB:64">field knows</h2>
+        <p class="body-copy" style="max-width:40ch;" data-om-id="fecB:65">Summarise the current state of knowledge and the most relevant prior work. Establish the established consensus, then point to where it stops — the edge of what's understood.</p>
+        <div class="brief" data-om-id="fecB:66">
+          <div class="qmark" data-om-id="fecB:67">?</div>
+          <div data-om-id="fecB:68">
+            <div class="brief-label" data-om-id="fecB:69">Slide Brief</div>
+            <div class="brief-text" data-om-id="fecB:70"><b data-om-id="fecB:71">What is already established, and why does it matter?</b> Cite the key prior findings your work builds on.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ph" style="height:100%;" data-om-id="fecB:72">
+        <span class="ph-fig" data-om-id="fecB:73">Fig. 01 — Context</span>
+        <span class="corner tl" data-om-id="fecB:74"></span><span class="corner tr" data-om-id="fecB:75"></span><span class="corner bl" data-om-id="fecB:76"></span><span class="corner br" data-om-id="fecB:77"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecB:78"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" data-om-id="fecB:79"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" data-om-id="fecB:80"></path></svg>
+        <span class="ph-label" data-om-id="fecB:81">Background figure</span>
+        <span class="ph-sub" data-om-id="fecB:82">Schematic, timeline, or summary of prior work</span>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:83">
+      <span class="brand" data-om-id="fecB:84"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:85">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:86"><b data-om-id="fecB:87">04</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 04 — QUESTION & HYPOTHESIS ============ -->
+  <section class="slide theme-black deep" data-screen-label="Black · Question &amp; Hypothesis" data-om-id="fecB:88" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:60px;" data-om-id="fecB:89">
+      <div class="eyebrow" data-om-id="fecB:90">02 · The Question</div>
+      <h2 class="display" data-om-id="fecB:91">The gap &amp; the <em data-om-id="fecB:92">hypothesis</em></h2>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:54px;" data-om-id="fecB:93">
+      <div class="stack" style="gap:18px;" data-om-id="fecB:94">
+        <span class="pill" data-om-id="fecB:95"><span class="dot" data-om-id="fecB:96"></span>Knowledge gap</span>
+        <p class="display" style="font-size:40px; line-height:1.18;" data-om-id="fecB:97">The specific question prior work leaves unanswered — stated precisely.</p>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fecB:98">
+        <span class="pill" data-om-id="fecB:99"><span class="dot" style="background:var(--amber);" data-om-id="fecB:100"></span>Hypothesis</span>
+        <p class="display" style="font-size:40px; line-height:1.18;" data-om-id="fecB:101">Your testable prediction, and the outcome that would confirm or refute it.</p>
+      </div>
+    </div>
+    <div class="brief" style="margin-top:40px; max-width:980px;" data-om-id="fecB:102">
+      <div class="qmark" data-om-id="fecB:103">?</div>
+      <div data-om-id="fecB:104">
+        <div class="brief-label" data-om-id="fecB:105">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecB:106"><b data-om-id="fecB:107">What is the unanswered question, and what do you predict?</b> Frame a hypothesis that is specific and falsifiable.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:108">
+      <span class="brand" data-om-id="fecB:109"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:110">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:111"><b data-om-id="fecB:112">05</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 05 — METHODS / APPROACH ============ -->
+  <section class="slide theme-black" data-screen-label="Black · Methods" data-om-id="fecB:113" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="two-col" data-om-id="fecB:114">
+      <div class="ph" style="height:100%;" data-om-id="fecB:115">
+        <span class="ph-fig" data-om-id="fecB:116">Fig. 02 — Workflow</span>
+        <span class="corner tl" data-om-id="fecB:117"></span><span class="corner tr" data-om-id="fecB:118"></span><span class="corner bl" data-om-id="fecB:119"></span><span class="corner br" data-om-id="fecB:120"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecB:121"><circle cx="12" cy="12" r="3" data-om-id="fecB:122"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" data-om-id="fecB:123"></path></svg>
+        <span class="ph-label" data-om-id="fecB:124">Methods diagram</span>
+        <span class="ph-sub" data-om-id="fecB:125">Experimental design, pipeline, or workflow</span>
+      </div>
+      <div class="stack" style="justify-content:center; gap:30px;" data-om-id="fecB:126">
+        <div class="eyebrow" data-om-id="fecB:127">03 · Methods</div>
+        <h2 class="display" data-om-id="fecB:128">How we<br data-om-id="fecB:129">tested it</h2>
+        <p class="body-copy" style="max-width:40ch;" data-om-id="fecB:130">Describe the approach so it could be reproduced: the model or system, the techniques, and the analysis. Lead with the logic of the design before the technical detail.</p>
+        <div class="brief" data-om-id="fecB:131">
+          <div class="qmark" data-om-id="fecB:132">?</div>
+          <div data-om-id="fecB:133">
+            <div class="brief-label" data-om-id="fecB:134">Slide Brief</div>
+            <div class="brief-text" data-om-id="fecB:135"><b data-om-id="fecB:136">What did you do, and why this design?</b> Give enough detail for the work to be reproduced and trusted.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:137">
+      <span class="brand" data-om-id="fecB:138"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:139">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:140"><b data-om-id="fecB:141">06</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 06 — STUDY DESIGN AT A GLANCE ============ -->
+  <section class="slide theme-black" data-screen-label="Black · Study Design" data-om-id="fecB:142" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="two-col" data-om-id="fecB:143">
+      <div class="stack" style="justify-content:center; gap:28px;" data-om-id="fecB:144">
+        <div class="eyebrow" data-om-id="fecB:145">03 · Study Design</div>
+        <h2 class="display" data-om-id="fecB:146">The setup,<br data-om-id="fecB:147">at a glance</h2>
+        <div class="stack" style="gap:20px; margin-top:6px;" data-om-id="fecB:148">
+          <div style="display:flex; gap:18px;" data-om-id="fecB:149"><span class="num" data-om-id="fecB:150">01</span><p class="body-copy" style="margin:0;" data-om-id="fecB:151">Sample / system — the cohort, model, or specimens, with size (n) and selection.</p></div>
+          <hr class="hairline" data-om-id="fecB:152">
+          <div style="display:flex; gap:18px;" data-om-id="fecB:153"><span class="num" data-om-id="fecB:154">02</span><p class="body-copy" style="margin:0;" data-om-id="fecB:155">Conditions — the intervention, comparison, or variables manipulated.</p></div>
+          <hr class="hairline" data-om-id="fecB:156">
+          <div style="display:flex; gap:18px;" data-om-id="fecB:157"><span class="num" data-om-id="fecB:158">03</span><p class="body-copy" style="margin:0;" data-om-id="fecB:159">Measures — the primary outcome and the analysis applied to it.</p></div>
+        </div>
+        <div class="brief" style="margin-top:8px;" data-om-id="fecB:160">
+          <div class="qmark" data-om-id="fecB:161">?</div>
+          <div data-om-id="fecB:162">
+            <div class="brief-label" data-om-id="fecB:163">Slide Brief</div>
+            <div class="brief-text" data-om-id="fecB:164"><b data-om-id="fecB:165">Who or what was studied, under what conditions?</b> State sample size, controls, and the primary outcome measure.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ph" style="height:100%;" data-om-id="fecB:166">
+        <span class="ph-fig" data-om-id="fecB:167">Fig. 03 — Setup</span>
+        <span class="corner tl" data-om-id="fecB:168"></span><span class="corner tr" data-om-id="fecB:169"></span><span class="corner bl" data-om-id="fecB:170"></span><span class="corner br" data-om-id="fecB:171"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecB:172"><path d="M9 3h6M10 3v6.5L5.5 18A2 2 0 007.3 21h9.4a2 2 0 001.8-3L14 9.5V3" data-om-id="fecB:173"></path></svg>
+        <span class="ph-label" data-om-id="fecB:174">Apparatus / sample image</span>
+        <span class="ph-sub" data-om-id="fecB:175">Equipment, preparation, or cohort overview</span>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:176">
+      <span class="brand" data-om-id="fecB:177"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:178">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:179"><b data-om-id="fecB:180">07</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 07 — RESULTS: KEY FINDINGS ============ -->
+  <section class="slide theme-black deep" data-screen-label="Black · Key Findings" data-om-id="fecB:181" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:64px;" data-om-id="fecB:182">
+      <div class="eyebrow" data-om-id="fecB:183">04 · Results</div>
+      <h2 class="display" data-om-id="fecB:184">The key <em data-om-id="fecB:185">findings</em></h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;" data-om-id="fecB:186">
+      <div class="stack" data-om-id="fecB:187"><div class="stat-big" data-om-id="fecB:188">0.0<span style="font-size:46px;" data-om-id="fecB:189">×</span></div><p class="stat-label" data-om-id="fecB:190">Primary effect — the magnitude of the difference you observed (effect size).</p></div>
+      <div class="stack" data-om-id="fecB:191"><div class="stat-big cyan" data-om-id="fecB:192">p &lt; .05</div><p class="stat-label" data-om-id="fecB:193">Statistical significance — report the test and exact value where you can.</p></div>
+      <div class="stack" data-om-id="fecB:194"><div class="stat-big" data-om-id="fecB:195">n = 0</div><p class="stat-label" data-om-id="fecB:196">Sample size — the scale on which the result holds.</p></div>
+    </div>
+    <div class="brief" style="margin-top:44px; max-width:980px;" data-om-id="fecB:197">
+      <div class="qmark" data-om-id="fecB:198">?</div>
+      <div data-om-id="fecB:199">
+        <div class="brief-label" data-om-id="fecB:200">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecB:201"><b data-om-id="fecB:202">What are your headline results?</b> Report effect size, significance, and sample — not just the direction of the effect.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:203">
+      <span class="brand" data-om-id="fecB:204"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:205">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:206"><b data-om-id="fecB:207">08</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 08 — RESULTS: PRIMARY FIGURE ============ -->
+  <section class="slide theme-black" data-screen-label="Black · Primary Figure" data-om-id="fecB:208" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="two-col" data-om-id="fecB:209">
+      <div class="stack" style="justify-content:center; gap:28px;" data-om-id="fecB:210">
+        <div class="eyebrow" data-om-id="fecB:211">04 · Results</div>
+        <h2 class="display" data-om-id="fecB:212">The data</h2>
+        <p class="body-copy" style="max-width:38ch;" data-om-id="fecB:213">Present your primary figure. Orient the audience first — axes, groups, and what a data point is — then walk them to the trend that answers the question.</p>
+        <div style="display:flex; gap:48px; margin-top:6px;" data-om-id="fecB:214">
+          <div data-om-id="fecB:215"><div class="stat-big" style="font-size:58px;" data-om-id="fecB:216">0.00</div><div class="stat-label" data-om-id="fecB:217">Key estimate (95% CI)</div></div>
+          <div data-om-id="fecB:218"><div class="stat-big cyan" style="font-size:58px;" data-om-id="fecB:219">—</div><div class="stat-label" data-om-id="fecB:220">Comparison / control</div></div>
+        </div>
+        <div class="brief" data-om-id="fecB:221">
+          <div class="qmark" data-om-id="fecB:222">?</div>
+          <div data-om-id="fecB:223">
+            <div class="brief-label" data-om-id="fecB:224">Slide Brief</div>
+            <div class="brief-text" data-om-id="fecB:225"><b data-om-id="fecB:226">What does your primary figure show?</b> Explain the axes before the result, and state the one takeaway.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ph" style="height:100%;" data-om-id="fecB:227">
+        <span class="ph-fig" data-om-id="fecB:228">Fig. 04 — Primary result</span>
+        <span class="corner tl" data-om-id="fecB:229"></span><span class="corner tr" data-om-id="fecB:230"></span><span class="corner bl" data-om-id="fecB:231"></span><span class="corner br" data-om-id="fecB:232"></span>
+        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecB:233"><path d="M3 3v18h18" data-om-id="fecB:234"></path><path d="M7 15l4-5 3 3 5-7" data-om-id="fecB:235"></path></svg>
+        <span class="ph-label" data-om-id="fecB:236">Results figure</span>
+        <span class="ph-sub" data-om-id="fecB:237">Graph, plot, table, or imaging panel</span>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:238">
+      <span class="brand" data-om-id="fecB:239"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:240">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:241"><b data-om-id="fecB:242">09</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 09 — FROM DATA TO MECHANISM ============ -->
+  <section class="slide theme-black" data-screen-label="Black · Interpretation" data-om-id="fecB:243" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:56px;" data-om-id="fecB:244">
+      <div class="eyebrow" data-om-id="fecB:245">05 · Discussion</div>
+      <h2 class="display" data-om-id="fecB:246">From data to mechanism</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:34px;" data-om-id="fecB:247">
+      <div class="card" data-om-id="fecB:248"><span class="num" data-om-id="fecB:249">OBSERVATION</span><h3 data-om-id="fecB:250">What we saw</h3><p data-om-id="fecB:251">Restate the result plainly — the pattern that needs explaining.</p></div>
+      <div class="card" data-om-id="fecB:252"><span class="num" data-om-id="fecB:253">MECHANISM</span><h3 data-om-id="fecB:254">Why it happens</h3><p data-om-id="fecB:255">The process or model that best accounts for the observation.</p></div>
+      <div class="card" data-om-id="fecB:256"><span class="num" data-om-id="fecB:257">PREDICTION</span><h3 data-om-id="fecB:258">What it implies</h3><p data-om-id="fecB:259">A further consequence your mechanism predicts — testable next.</p></div>
+    </div>
+    <div class="brief" style="margin-top:40px; max-width:980px;" data-om-id="fecB:260">
+      <div class="qmark" data-om-id="fecB:261">?</div>
+      <div data-om-id="fecB:262">
+        <div class="brief-label" data-om-id="fecB:263">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecB:264"><b data-om-id="fecB:265">How do you explain the results?</b> Connect the finding to a mechanism, and note what that mechanism predicts.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:266">
+      <span class="brand" data-om-id="fecB:267"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:268">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:269"><b data-om-id="fecB:270">10</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ 10 — DISCUSSION: MEANING, LIMITS, NEXT ============ -->
+  <section class="slide theme-black deep" data-screen-label="Black · Discussion" data-om-id="fecB:271" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:56px;" data-om-id="fecB:272">
+      <div class="eyebrow" data-om-id="fecB:273">05 · Discussion</div>
+      <h2 class="display" data-om-id="fecB:274">Meaning, limits &amp; next steps</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:34px;" data-om-id="fecB:275">
+      <div class="card" data-om-id="fecB:276"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5" data-om-id="fecB:277"><circle cx="12" cy="12" r="9" data-om-id="fecB:278"></circle><path d="M12 7v5l3 3" data-om-id="fecB:279"></path></svg><h3 data-om-id="fecB:280">Implications</h3><p data-om-id="fecB:281">What these findings change for the field, theory, or practice.</p></div>
+      <div class="card" data-om-id="fecB:282"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5" data-om-id="fecB:283"><path d="M10.3 3.7a2 2 0 013.4 0l8 14A2 2 0 0120 21H4a2 2 0 01-1.7-3z" data-om-id="fecB:284"></path><path d="M12 9v4M12 17h.01" data-om-id="fecB:285"></path></svg><h3 data-om-id="fecB:286">Limitations</h3><p data-om-id="fecB:287">Honest constraints — confounds, scope, or what the data can't yet show.</p></div>
+      <div class="card" data-om-id="fecB:288"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="1.5" data-om-id="fecB:289"><path d="M5 12h14M13 6l6 6-6 6" data-om-id="fecB:290"></path></svg><h3 data-om-id="fecB:291">Future work</h3><p data-om-id="fecB:292">The next experiment, and the open question it would resolve.</p></div>
+    </div>
+    <div class="brief" style="margin-top:38px; max-width:980px;" data-om-id="fecB:293">
+      <div class="qmark" data-om-id="fecB:294">?</div>
+      <div data-om-id="fecB:295">
+        <div class="brief-label" data-om-id="fecB:296">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecB:297"><b data-om-id="fecB:298">What can you conclude, what are the limits, and what's next?</b> Address limitations directly — it builds credibility.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:299">
+      <span class="brand" data-om-id="fecB:300"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:301">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:302"><b data-om-id="fecB:303">11</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ CONTRIBUTORS & ACKNOWLEDGEMENTS ============ -->
+  <section class="slide theme-black" data-screen-label="Black · Contributors" data-om-id="fecB:304" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <div class="head-block" style="margin-bottom:46px;" data-om-id="fecB:305">
+      <div class="eyebrow" data-om-id="fecB:306">Acknowledgements</div>
+      <h2 class="display" data-om-id="fecB:307">Contributors &amp; support</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:34px;" data-om-id="fecB:308">
+      <div class="stack" style="gap:18px;" data-om-id="fecB:309">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fecB:310"><span class="corner tl" data-om-id="fecB:311"></span><span class="corner tr" data-om-id="fecB:312"></span><span class="corner bl" data-om-id="fecB:313"></span><span class="corner br" data-om-id="fecB:314"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecB:315"><circle cx="12" cy="8" r="4" data-om-id="fecB:316"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fecB:317"></path></svg><span class="ph-label" data-om-id="fecB:318">Portrait</span></div>
+        <div data-om-id="fecB:319"><div class="display" style="font-size:26px;" data-om-id="fecB:320">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fecB:321">Role · Affiliation</div></div>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fecB:322">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fecB:323"><span class="corner tl" data-om-id="fecB:324"></span><span class="corner tr" data-om-id="fecB:325"></span><span class="corner bl" data-om-id="fecB:326"></span><span class="corner br" data-om-id="fecB:327"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecB:328"><circle cx="12" cy="8" r="4" data-om-id="fecB:329"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fecB:330"></path></svg><span class="ph-label" data-om-id="fecB:331">Portrait</span></div>
+        <div data-om-id="fecB:332"><div class="display" style="font-size:26px;" data-om-id="fecB:333">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fecB:334">Role · Affiliation</div></div>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fecB:335">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fecB:336"><span class="corner tl" data-om-id="fecB:337"></span><span class="corner tr" data-om-id="fecB:338"></span><span class="corner bl" data-om-id="fecB:339"></span><span class="corner br" data-om-id="fecB:340"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecB:341"><circle cx="12" cy="8" r="4" data-om-id="fecB:342"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fecB:343"></path></svg><span class="ph-label" data-om-id="fecB:344">Portrait</span></div>
+        <div data-om-id="fecB:345"><div class="display" style="font-size:26px;" data-om-id="fecB:346">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fecB:347">Role · Affiliation</div></div>
+      </div>
+      <div class="stack" style="gap:18px;" data-om-id="fecB:348">
+        <div class="ph" style="aspect-ratio:1/1; border-radius:8px;" data-om-id="fecB:349"><span class="corner tl" data-om-id="fecB:350"></span><span class="corner tr" data-om-id="fecB:351"></span><span class="corner bl" data-om-id="fecB:352"></span><span class="corner br" data-om-id="fecB:353"></span><svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-om-id="fecB:354"><circle cx="12" cy="8" r="4" data-om-id="fecB:355"></circle><path d="M4 21a8 8 0 0116 0" data-om-id="fecB:356"></path></svg><span class="ph-label" data-om-id="fecB:357">Portrait</span></div>
+        <div data-om-id="fecB:358"><div class="display" style="font-size:26px;" data-om-id="fecB:359">Full Name</div><div style="font-family:var(--font-mono); font-size:18px; color:var(--amber); letter-spacing:0.08em; margin-top:6px;" data-om-id="fecB:360">Role · Affiliation</div></div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:20px; margin-top:36px;">
+      <span style="font-family:var(--font-mono); font-size:18px; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-muted);">Funding &amp; support</span>
+      <hr class="hairline" style="flex:1;">
+      <span class="pill">Grant / funder</span>
+      <span class="pill">Institution</span>
+      <span class="pill">Collaborating lab</span>
+    </div>
+    <div class="brief" style="margin-top:30px; max-width:980px;" data-om-id="fecB:367">
+      <div class="qmark" data-om-id="fecB:368">?</div>
+      <div data-om-id="fecB:369">
+        <div class="brief-label" data-om-id="fecB:370">Slide Brief</div>
+        <div class="brief-text" data-om-id="fecB:371"><b data-om-id="fecB:372">Who contributed, and who funded the work?</b> Credit co-authors, collaborators, and funding sources.</div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:373">
+      <span class="brand" data-om-id="fecB:374"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:375">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:376"><b data-om-id="fecB:377">12</b> / 13</span>
+    </div>
+  </section>
+
+  <!-- ============ CONCLUSIONS ============ -->
+  <section class="slide theme-black deep" data-screen-label="Black · Conclusions" data-om-id="fecB:378" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text">
+    <img class="seed-wm" src="assets/seed-mark.png" alt="" style="left:-140px; bottom:-160px; width:620px; opacity:0.14;" data-om-id="fecB:379">
+    <div class="stack" style="height:100%; justify-content:center; gap:34px; max-width:1140px;" data-om-id="fecB:380">
+      <div class="eyebrow" data-om-id="fecB:381">06 · Conclusions</div>
+      <h1 class="display" style="font-size:92px; max-width:20ch;" data-om-id="fecB:382">The one thing to <em data-om-id="fecB:383">take away</em></h1>
+      <p class="lead" style="font-size:29px; max-width:40ch;" data-om-id="fecB:384">State your central conclusion in a single sentence — the finding you want the room to remember and cite.</p>
+      <div style="display:flex; gap:40px; align-items:center; margin-top:12px; flex-wrap:wrap; font-family:var(--font-mono); font-size:19px; color:var(--text-secondary); letter-spacing:0.06em;" data-om-id="fecB:385">
+        <span data-om-id="fecB:386">Preprint / DOI</span>
+        <span style="color:var(--text-muted);" data-om-id="fecB:387">·</span>
+        <span data-om-id="fecB:388">lab.seedbiomed.com</span>
+        <span style="color:var(--text-muted);" data-om-id="fecB:389">·</span>
+        <span data-om-id="fecB:390">author@seedbiomed.com</span>
+      </div>
+      <div class="brief" style="max-width:760px; margin-top:14px;" data-om-id="fecB:391">
+        <div class="qmark" data-om-id="fecB:392">?</div>
+        <div data-om-id="fecB:393">
+          <div class="brief-label" data-om-id="fecB:394">Slide Brief</div>
+          <div class="brief-text" data-om-id="fecB:395"><b data-om-id="fecB:396">What is the single finding you want remembered?</b> End on the conclusion, and point to where the work can be read in full.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-om-id="fecB:397">
+      <span class="brand" data-om-id="fecB:398"><img src="assets/seed-mark.png" alt="" data-om-id="fecB:399">SEEDBiomed</span>
+      <span class="pg" data-om-id="fecB:400"><b data-om-id="fecB:401">13</b> / 13</span>
+    </div>
+  </section>
+
+
+</deck-stage>
+<script src="scripts/deck-stage.js"></script>
+</body>
+</html>
