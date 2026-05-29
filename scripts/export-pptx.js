@@ -75,6 +75,13 @@ const SCALE = 2;                   // 2x for crisp images
       secs.forEach((s, k) => {
         s.style.display = (k === idx) ? 'block' : 'none';
         s.style.opacity = (k === idx) ? '1' : '0';
+        // deck-stage shadow DOM sets visibility:hidden on ::slotted(*) —
+        // override it via inline style (no !important on that rule) and via
+        // data-deck-active so the component's own ::slotted([data-deck-active])
+        // rule also fires its visibility:visible declaration.
+        s.style.visibility = (k === idx) ? 'visible' : '';
+        if (k === idx) s.setAttribute('data-deck-active', '');
+        else s.removeAttribute('data-deck-active');
       });
       const s = secs[idx];
       s.style.position = 'absolute';
